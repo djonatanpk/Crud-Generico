@@ -10,7 +10,6 @@
  * integralmente via parâmetro.                                                                                 *  
  *************************************************************************************************************/  
   
-header('Content-Type: text/html; charset=utf-8');  
   
  class Crud{   
     
@@ -84,21 +83,22 @@ header('Content-Type: text/html; charset=utf-8');
               
        // Loop para montar a instrução com os campos e valores   
        foreach($arrayDados as $chave => $valor):   
-          $campos .= $chave . ', ';   
-          $valores .= '?, ';   
-       endforeach;   
+          $campos .= $chave.',';   
+          $valores .= '?,';   
+       endforeach;  
               
        // Retira vírgula do final da string   
-       $campos = (substr($campos, -2) == ', ') ? trim(substr($campos, (strlen($campos) - 2))) : $campos ;    
+       $campos = (substr($campos, -2) == ',') ? trim(substr($campos, (strlen($campos) - 2))) : $campos;    
               
        // Retira vírgula do final da string   
-       $valores = (substr($valores, -2) == ', ') ? trim(substr($valores, (strlen($valores) - 2))) : $valores ;    
-              
+       $valores = (substr($valores, -2) == ',') ? trim(substr($valores, (strlen($valores) - 2))) : $valores;    
+
        // Concatena todas as variáveis e finaliza a instrução   
-       $sql .= "INSERT INTO {$this->tabela} (" . $campos . ")VALUES(" . $valores . ")";   
+       $sql .= "INSERT INTO ".$this->tabela." (".substr($campos,0, strlen($campos)-1).") VALUES(".substr($valores,0, strlen($valores)-1).")";   
               
        // Retorna string com instrução SQL   
-       return trim($sql);   
+       return trim($sql);  
+		//echo $sql."<br /><br /><br />";
    }   
     
    /*   
@@ -106,7 +106,8 @@ header('Content-Type: text/html; charset=utf-8');
    * @param $arrayDados = Array de dados contendo colunas, operadores e valores   
    * @param $arrayCondicao = Array de dados contendo colunas e valores para condição WHERE   
    * @return String contendo instrução SQL   
-   */    
+   */   
+
    private function buildUpdate($arrayDados, $arrayCondicao){   
     
        // Inicializa variáveis   
@@ -121,21 +122,21 @@ header('Content-Type: text/html; charset=utf-8');
               
        // Loop para montar a condição WHERE   
        foreach($arrayCondicao as $chave => $valor):   
-          $valCondicao .= $chave . '? AND ';   
+          $valCondicao .= $chave . '?';   
        endforeach;   
               
        // Retira vírgula do final da string   
-       $valCampos = (substr($valCampos, -2) == ', ') ? trim(substr($valCampos,  (strlen($valCampos) - 2))) : $valCampos ;    
+       $valCampos = (substr($valCampos, 0) == ', ') ? trim(substr($valCampos,  (strlen($valCampos) - 2))) : $valCampos ;    
               
        // Retira vírgula do final da string   
-       $valCondicao = (substr($valCondicao, -4) == 'AND ') ? trim(substr($valCondicao,  (strlen($valCondicao) - 4))) : $valCondicao ;    
+       $valCondicao = (substr($valCondicao, -2) == 'AND ') ? trim(substr($valCondicao,  (strlen($valCondicao) - 4))) : $valCondicao ;    
               
         // Concatena todas as variáveis e finaliza a instrução   
-        $sql .= "UPDATE {$this->tabela} SET " . $valCampos . " WHERE " . $valCondicao;   
+        $sql .= "UPDATE {$this->tabela} SET " . substr($valCampos,0, strlen($valCampos)-2) . " WHERE " . $valCondicao;   
               
         // Retorna string com instrução SQL   
         return trim($sql);   
-   }   
+   }
     
    /*   
    * Método privado para construção da instrução SQL de DELETE   
@@ -150,7 +151,7 @@ header('Content-Type: text/html; charset=utf-8');
               
         // Loop para montar a instrução com os campos e valores   
         foreach($arrayCondicao as $chave => $valor):   
-           $valCampos .= $chave . '? AND ';   
+           $valCampos .= $chave . '?';   
         endforeach;   
               
         // Retira a palavra AND do final da string   
@@ -161,7 +162,7 @@ header('Content-Type: text/html; charset=utf-8');
               
         // Retorna string com instrução SQL   
         return trim($sql);   
-   }   
+   }
     
    /*   
    * Método público para inserir os dados na tabela   
