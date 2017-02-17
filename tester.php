@@ -1,4 +1,6 @@
- <?php require_once "Conexao.php";  
+ <?php 
+ 
+ require_once "Conexao.php";  
  require_once "crudIntro.class.php"; 
  
  // Consumindo métodos do CRUD genérico 
