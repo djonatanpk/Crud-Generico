@@ -1,8 +1,8 @@
 <?php  
   
  /*************************************************************************************************************** 
- * @author William F. Leite                                                                                     *  
- * Data: 20/06/2014                                                                                             *
+ * @author Djonatan Pablo Kruger                                                                                *  
+ * Data: 15/02/2017                                                                                             *
  * Título: CRUD genérico                                                                                        *  
  * Descrição: A Classe de CRUD genérico foi elaborada com o objetivo de auxlilar nas operações CRUDs em diversos* 
  * SGBDS, possui funcionalidades para construir instruções de INSERT, UPDATE E DELETE onde as mesmas podem ser  *
